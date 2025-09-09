@@ -87,3 +87,40 @@ function showCategories(categories) {
   }
 }
 
+
+   //Load All Plants
+
+function loadAllPlants() {
+  showLoading();
+  fetch(API_BASE + "/plants")
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      showPlants((data && data.plants) || []);
+    })
+    .catch(function () {
+      showError("plants");
+    });
+}
+
+
+   //Load Plants by Category
+
+function loadPlantsByCategory(id) {
+  showLoading();
+  fetch(API_BASE + "/category/" + id)
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      var plants = (data && data.plants) || [];
+      if (plants.length) showPlants(plants);
+      else showEmptyMessage();
+    })
+    .catch(function () {
+      showError("plants");
+    });
+}
+
+ 
